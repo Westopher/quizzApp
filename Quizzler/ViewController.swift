@@ -10,10 +10,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    //Place your instance variables here
     let allQuestions = QuestionBank()
     var pickedAnswer: Bool = false
     var questionNumber: Int = 0
+    var score = 0
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -38,18 +38,20 @@ class ViewController: UIViewController {
         checkAnswer()
         questionNumber = questionNumber + 1
         nextQuestion()
+        updateUI()
     }
     
     
     func updateUI() {
-      
+        scoreLabel.text = "Score: \(score) / 13"
+        progressLabel.text = "Question Number: \(questionNumber + 1) / 13"
     }
     
     func nextQuestion() {
         if questionNumber <= 12 {
             questionLabel.text = allQuestions.list[questionNumber].questionText
         } else {
-            let alert = UIAlertController(title: "Game Done", message: "Congrats, You Finished; Start Over?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Game Done", message: "Congrats, You Scored: \(score) / 13", preferredStyle: .alert)
             let restartAction = UIAlertAction(title: "Restart", style: .default, handler: { (UIAlertAction) in
                 self.startOver()
             })
@@ -58,11 +60,11 @@ class ViewController: UIViewController {
         }
     }
     
-    
     func checkAnswer() {
         let correctAnswer = allQuestions.list[questionNumber].answer
         if correctAnswer == pickedAnswer {
             print("correct")
+            score = score + 1
         } else {
             print("incorrect")
         }
@@ -72,6 +74,8 @@ class ViewController: UIViewController {
     func startOver() {
         questionNumber = 0
         nextQuestion()
+        score = 0
+        scoreLabel.text = "\(score) / 13"
     }
     
 
