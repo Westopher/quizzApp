@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     //Place your instance variables here
     let allQuestions = QuestionBank()
     var pickedAnswer: Bool = false
+    var questionNumber: Int = 0
     
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -23,7 +24,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         let firstQuestion = allQuestions.list[0]
         questionLabel.text = firstQuestion.questionText
-        
     }
 
 
@@ -36,6 +36,8 @@ class ViewController: UIViewController {
         }
         
         checkAnswer()
+        questionNumber = questionNumber + 1
+        questionLabel.text = allQuestions.list[questionNumber].questionText
     }
     
     
